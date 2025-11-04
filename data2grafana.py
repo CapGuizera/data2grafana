@@ -1,31 +1,24 @@
-import hashlib
 import base64
-
-def generate_hash(password, salt, rands, iterations=10000):
-    password_with_rands = password + rands
-    salt_bytes = salt.encode('utf-8')
-    
-    hash_bytes = hashlib.pbkdf2_hmac('sha256', 
-                                    password_with_rands.encode('utf-8'), 
-                                    salt_bytes, 
-                                    iterations, 
-                                    dklen=32)
-    
-    # Converter salt e hash para base64
-    salt_b64 = base64.b64encode(salt_bytes).decode('utf-8')
-    hash_b64 = base64.b64encode(hash_bytes).decode('utf-8')
-    
-    # Formatar no padrão sha256:10000:salt64:hash64
-    formatted_hash = f"sha256:{iterations}:{salt_b64}:{hash_b64}"
-    
-    return formatted_hash
+import binascii
+import sys
 
 # Get user inputs
+password_hex = input("Password hash (hex): ")
 salt = input("Salt: ")
-rands = input("Rands: ")
-user = input("User: ")
-password = input("Password: ")
+iterations = 10000
 
-# Generate and print the hash
-result = generate_hash(password, salt, rands)
-print(f"\n{result}")
+try:
+    # Convert hex to raw bytes
+    target_raw = binascii.unhexlify(password_hex.replace("\n", ""))
+    
+    # Convert to base64
+    target_hash64 = base64.b64encode(target_raw).decode("utf-8")
+    salt64 = base64.b64encode(salt.encode("utf-8")).decode("utf-8")
+    
+    # Format the final string
+    result = f"sha256:{iterations}:{salt64}:{target_hash64}"
+    print(f"\n{result}")
+    
+except (binascii.Error, ValueError) as e:
+    print("ERROR: Password hash is not valid hex:", e)
+    sys.exit(1)
