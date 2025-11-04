@@ -16,7 +16,7 @@ Instructions
     Use the cd (change directory) command to navigate to the folder where you saved hash_generator.py. For example, if you saved it on your Desktop, you would run:
     Bash
 
-cd Desktop
+    cd Desktop
 
 Run the Script:
 Execute the script using the python command:
@@ -35,7 +35,8 @@ Example Usage
 Here is an example of what a complete session in the terminal will look like:
 Bash
 
-$ python hash_generator.py
+    $ python hash_generator.py
+
 Salt: LCBhdtJWj1
 Rands: mY1941ma8w
 User: boris
