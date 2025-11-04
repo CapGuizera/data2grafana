@@ -1,4 +1,5 @@
 How to Use This Script
+
 This script generates a password hash using the PBKDF2-HMAC-SHA256 algorithm. It requires a password, a salt, and a rands value as input. It then produces a formatted string that includes the algorithm, iteration count, salt, and the final hash, all encoded in Base64.
 Prerequisites
 
